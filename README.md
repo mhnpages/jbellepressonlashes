@@ -93,7 +93,7 @@ Puedes cambiar textos o puntuaciones. Si agregas una pregunta, la barra de progr
 
 ## Cambiar el tutorial completo
 
-El tutorial de YouTube aparece después de los dos videos verticales. Para cambiarlo, reemplaza el identificador `uWrDeOx_scs` dentro del enlace `youtube.com/embed/` en `index.html`.
+El tutorial de YouTube aparece después de los dos videos verticales como una portada reproducible. Al tocarla se abre el video completo directamente en YouTube, evitando errores de configuración del reproductor integrado. Para cambiarlo, reemplaza el identificador `uWrDeOx_scs` en el enlace y en la portada de `index.html`.
 
 ## Editar redes sociales
 

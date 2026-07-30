@@ -52,9 +52,25 @@ button { color: inherit; }
   display: flex; align-items: center; justify-content: space-between; gap: 28px;
   border-bottom: 1px solid rgba(40, 33, 36, 0.16);
 }
-.brand { display: inline-flex; flex-direction: column; align-items: center; line-height: .8; text-decoration: none; min-width: 110px; }
-.brand-script { font-family: var(--font-display); font-style: italic; font-weight: 700; font-size: 29px; letter-spacing: -1px; }
-.brand-small { margin-top: 8px; font-size: 8px; text-transform: uppercase; letter-spacing: 3px; }
+.brand {
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  width: 132px;
+  height: 70px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #fff;
+  text-decoration: none;
+}
+.brand-logo {
+  position: absolute;
+  top: -18px;
+  left: -40px;
+  width: 220px;
+  max-width: none;
+  height: auto;
+}
 .header-nav { display: flex; gap: 32px; margin-left: auto; }
 .header-nav a { font-size: 13px; font-weight: 700; text-decoration: none; }
 .header-nav a:hover { color: var(--jbelle-rose-dark); }
@@ -261,7 +277,8 @@ h1 em, h2 em { color: var(--jbelle-rose-dark); font-weight: 500; }
 .site-footer { min-height: 190px; display: grid; grid-template-columns: .7fr 1fr 1.5fr auto; align-items: center; gap: 30px; padding: 40px max(24px, calc((100% - var(--max-width)) / 2)); background: #1d191b; color: rgba(255,255,255,.65); font-size: 11px; }
 .site-footer p { margin: 0; }
 .site-footer a { color: white; }
-.footer-brand { color: white; }
+.footer-brand { width: 168px; height: 92px; }
+.footer-brand .brand-logo { top: -23px; left: -51px; width: 278px; }
 .footer-note { max-width: 430px; }
 .mobile-order { display: none; }
 
@@ -319,7 +336,8 @@ input:focus, select:focus { border-color: var(--jbelle-rose); outline: 3px solid
 @media (max-width: 680px) {
   body { padding-bottom: 76px; }
   .site-header { width: calc(100% - 32px); }
-  .brand-script { font-size: 26px; }
+  .site-header .brand { width: 114px; height: 62px; }
+  .site-header .brand-logo { top: -16px; left: -35px; width: 192px; }
   .hero { padding: 104px 20px 48px; background: radial-gradient(circle at 78% 29%, white, transparent 35%), linear-gradient(155deg, #fff9f3, #f7e0e4); }
   h1 { font-size: clamp(54px, 16vw, 72px); letter-spacing: -3px; }
   .hero-lede { font-size: 15px; }

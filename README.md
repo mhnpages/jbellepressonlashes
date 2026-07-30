@@ -53,7 +53,7 @@ Reemplaza una fotografía conservando el nombre para no tocar el código:
 - `assets/images/como-colocar.png` y `.webp`: explicación visual.
 - `assets/images/antes-despues.jpg` y `.webp`: resultado real.
 
-El encabezado usa una versión tipográfica del nombre J. Belle para evitar una imagen rota. Si recibes el logo oficial aislado, guárdalo como `assets/images/logo-jbelle.png` y reemplaza el bloque `.brand` del encabezado por una etiqueta `<img>` con texto alternativo.
+El logo oficial está guardado como `assets/images/logo-jbelle.png` y se usa en el encabezado, el pie y la imagen de vista previa al compartir el sitio. Para actualizarlo, reemplaza ese archivo conservando el nombre y las proporciones originales; el CSS se encarga del encuadre responsive sin deformarlo.
 
 Para una carga más rápida, crea también la versión WebP con el mismo nombre. No alteres la forma, densidad, curvatura ni largo del producto real.
 

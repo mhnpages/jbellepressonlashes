@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "J. Belle Press-On Lashes",
     description: "Tu mirada cambia en un minuto.",
-    images: ["/assets/images/og.png"],
+    images: ["/assets/images/logo-jbelle.png"],
   },
 };
 

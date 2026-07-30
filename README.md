@@ -93,7 +93,7 @@ Puedes cambiar textos o puntuaciones. Si agregas una pregunta, la barra de progr
 
 ## Cambiar el tutorial completo
 
-El tutorial de YouTube aparece después de los dos videos verticales. Para cambiarlo, reemplaza el identificador `uWrDeOx_scs` dentro del enlace `youtube-nocookie.com/embed/` en `index.html`.
+El tutorial de YouTube aparece después de los dos videos verticales. Para cambiarlo, reemplaza el identificador `uWrDeOx_scs` dentro del enlace `youtube.com/embed/` en `index.html`.
 
 ## Editar redes sociales
 

@@ -163,7 +163,7 @@
     quizCard.hidden = true;
     result.hidden = false;
     result.innerHTML = `
-      <div class="recommendation-image">
+      <div class="recommendation-image recommendation-image-${styleId}">
         <img src="${style.image}" data-fallback="${style.fallbackImage}" alt="Estilo ${style.name} ${style.length}" width="1536" height="1024" />
       </div>
       <div class="recommendation-copy">
@@ -295,43 +295,6 @@ Quedo pendiente para confirmar disponibilidad y entrega.`;
     });
   }
 
-  function renderInstagramEmbeds() {
-    const container = document.getElementById("instagram-reels");
-    if (!container) return;
-    const urls = config.instagramReels.filter(Boolean).slice(0, 2);
-
-    if (!urls.length) {
-      container.innerHTML = [1, 2]
-        .map(
-          (number) => `
-          <div class="instagram-slot">
-            <div><span>IG</span><p>Espacio para Reel ${number}</p><small>Pega el enlace en <b>assets/js/config.js</b> y aparecerá aquí.</small></div>
-          </div>`
-        )
-        .join("");
-      return;
-    }
-
-    container.innerHTML = urls
-      .map(
-        (url) => `
-        <blockquote class="instagram-media" data-instgrm-permalink="${url}" data-instgrm-version="14">
-          <a href="${url}" target="_blank" rel="noopener noreferrer">Ver Reel en Instagram</a>
-        </blockquote>`
-      )
-      .join("");
-
-    if (!document.querySelector("script[data-instagram-embed]")) {
-      const script = document.createElement("script");
-      script.async = true;
-      script.src = "https://www.instagram.com/embed.js";
-      script.dataset.instagramEmbed = "true";
-      document.body.appendChild(script);
-    } else if (window.instgrm) {
-      window.instgrm.Embeds.process();
-    }
-  }
-
   function renderSocialLinks() {
     const container = document.getElementById("social-links");
     if (!container) return;
@@ -458,7 +421,6 @@ Quedo pendiente para confirmar disponibilidad y entrega.`;
     document.getElementById("current-year").textContent = new Date().getFullYear();
     restoreTemporarySelection();
     renderQuiz();
-    renderInstagramEmbeds();
     renderSocialLinks();
     attachImageFallbacks();
     setupRevealAnimations();

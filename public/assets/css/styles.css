@@ -59,8 +59,6 @@ button { color: inherit; }
   width: 132px;
   height: 70px;
   overflow: hidden;
-  border-radius: 14px;
-  background: #fff;
   text-decoration: none;
 }
 .brand-logo {
@@ -156,9 +154,9 @@ h1 em, h2 em { color: var(--jbelle-rose-dark); font-weight: 500; }
 .advisor-intro .eyebrow { color: #dfa6b2; }
 .advisor-intro h2 { position: relative; z-index: 2; margin-bottom: 20px; font-size: clamp(45px, 4.5vw, 69px); }
 .advisor-intro > p { position: relative; z-index: 2; color: rgba(255,255,255,.72); }
-.advisor-portrait { position: absolute; inset: auto 0 0; height: 44%; overflow: hidden; opacity: .55; }
-.advisor-portrait::after { content: ""; position: absolute; inset: 0; background: linear-gradient(var(--jbelle-charcoal), transparent 58%); }
-.advisor-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 23%; }
+.advisor-portrait { position: absolute; inset: auto 0 0; height: 52%; overflow: hidden; opacity: .78; }
+.advisor-portrait::after { content: ""; position: absolute; inset: 0; background: linear-gradient(var(--jbelle-charcoal), rgba(40,33,36,.72) 16%, transparent 55%); }
+.advisor-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; }
 .quiz-card, .recommendation-card { align-self: center; padding: clamp(34px, 6vw, 82px); }
 .quiz-progress { display: flex; align-items: center; gap: 18px; margin-bottom: 54px; color: var(--jbelle-soft-text); font-size: 12px; font-weight: 700; }
 .progress-track { flex: 1; height: 3px; overflow: hidden; background: rgba(125,62,77,.14); }
@@ -170,8 +168,8 @@ h1 em, h2 em { color: var(--jbelle-rose-dark); font-weight: 500; }
 .quiz-option:hover { border-color: var(--jbelle-rose); background: white; transform: translateX(4px); }
 .quiz-back { margin-top: 24px; border: 0; background: none; color: var(--jbelle-soft-text); cursor: pointer; text-decoration: underline; }
 .recommendation-card { display: grid; grid-template-columns: .9fr 1.1fr; gap: 34px; align-items: center; }
-.recommendation-image { overflow: hidden; border-radius: 24px; background: var(--jbelle-pink); }
-.recommendation-image img { width: 100%; height: 100%; min-height: 390px; object-fit: cover; }
+.recommendation-image { height: 390px; overflow: hidden; border-radius: 24px; background: var(--jbelle-pink); }
+.recommendation-image img { width: 200%; max-width: none; height: 100%; object-fit: cover; object-position: left 18%; }
 .recommendation-copy h3 { margin-bottom: 15px; font-size: clamp(40px, 4vw, 62px); }
 .recommendation-copy h3 span { display: block; color: var(--jbelle-rose-dark); font-size: .52em; }
 .recommendation-copy p { color: var(--jbelle-soft-text); }
@@ -241,16 +239,11 @@ h1 em, h2 em { color: var(--jbelle-rose-dark); font-weight: 500; }
 .video-card > div > span { color: #dfa6b2; font-family: var(--font-display); font-size: 24px; }
 .video-card p, .video-card small, .video-card strong { display: block; margin: 0; }
 .video-card small { margin-top: 2px; color: rgba(255,255,255,.58); }
-.instagram-panel { margin-top: 80px; padding-top: 46px; border-top: 1px solid rgba(255,255,255,.13); }
-.instagram-heading { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 28px; }
-.instagram-heading h3 { margin-bottom: 0; font-size: 44px; }
-.instagram-heading a { color: #f1c4ce; font-size: 13px; font-weight: 700; }
-.instagram-grid { display: grid; grid-template-columns: repeat(2, minmax(280px, 420px)); justify-content: center; gap: 24px; }
-.instagram-slot { min-height: 500px; display: grid; place-items: center; padding: 35px; border: 1px dashed rgba(255,255,255,.24); border-radius: 26px; background: rgba(255,255,255,.035); text-align: center; }
-.instagram-slot span { display: grid; place-items: center; width: 54px; aspect-ratio: 1; margin: 0 auto 16px; border: 1px solid rgba(255,255,255,.32); border-radius: 16px; font-family: var(--font-display); font-size: 24px; }
-.instagram-slot p { margin-bottom: 8px; font-family: var(--font-display); font-size: 28px; }
-.instagram-slot small { color: rgba(255,255,255,.58); }
-.instagram-media { min-width: 0 !important; width: 100% !important; }
+.tutorial-panel { display: grid; grid-template-columns: minmax(250px, .72fr) minmax(0, 1.55fr); gap: clamp(28px, 5vw, 72px); align-items: center; margin-top: 80px; padding-top: 54px; border-top: 1px solid rgba(255,255,255,.13); }
+.tutorial-copy h3 { margin-bottom: 16px; font-size: clamp(38px, 4vw, 58px); }
+.tutorial-copy > p:not(.eyebrow) { margin-bottom: 28px; color: rgba(255,255,255,.68); }
+.tutorial-video { overflow: hidden; border: 1px solid rgba(255,255,255,.16); border-radius: 28px; background: #120f11; box-shadow: 0 24px 70px rgba(0,0,0,.28); }
+.tutorial-video iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; }
 
 .faq-section { display: grid; grid-template-columns: .65fr 1.35fr; gap: 10%; background: var(--jbelle-ivory); }
 .faq-intro { position: sticky; top: 40px; align-self: start; }
@@ -366,7 +359,7 @@ input:focus, select:focus { border-color: var(--jbelle-rose); outline: 3px solid
   .quiz-progress { margin-bottom: 32px; }
   .quiz-question { font-size: 37px; }
   .recommendation-card { grid-template-columns: 1fr; }
-  .recommendation-image img { min-height: 220px; }
+  .recommendation-image { height: 250px; }
   .recommendation-actions { flex-direction: column; }
   .recommendation-actions .button { width: 100%; }
   .style-card { display: block; }
@@ -380,10 +373,10 @@ input:focus, select:focus { border-color: var(--jbelle-rose); outline: 3px solid
   .kit-offer { grid-template-columns: 1fr; }
   .real-look { gap: 44px; }
   .before-after { max-height: 600px; }
-  .video-grid, .instagram-grid { grid-template-columns: 1fr; }
+  .video-grid { grid-template-columns: 1fr; }
   .video-card video { max-height: none; }
-  .instagram-heading { align-items: start; flex-direction: column; }
-  .instagram-slot { min-height: 460px; }
+  .tutorial-panel { grid-template-columns: 1fr; margin-top: 58px; padding-top: 42px; }
+  .tutorial-copy .button { width: 100%; }
   .closing-cta { padding: 82px 20px; }
   .site-footer { grid-template-columns: 1fr; padding: 50px 20px; }
   .mobile-order { position: fixed; z-index: 80; left: 12px; right: 12px; bottom: 10px; min-height: 56px; display: flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid rgba(255,255,255,.2); border-radius: 999px; background: var(--jbelle-charcoal); color: white; box-shadow: 0 15px 35px rgba(30,18,22,.32); font-size: 13px; font-weight: 800; }

@@ -98,8 +98,5 @@ window.JBELLE_CONFIG = {
     // Agrega una URL para mostrar estas redes en la sección social.
     facebook: { label: "Facebook", handle: "J. Belle Cosmetics", url: "" },
     tiktok: { label: "TikTok", handle: "@j.bellecosmetics", url: "" }
-  },
-
-  // Pega uno o dos enlaces completos de Reels y aparecerán como embeds verticales.
-  instagramReels: ["", ""]
+  }
 };

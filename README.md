@@ -22,7 +22,7 @@ Después abre `http://localhost:4173`. Evita abrir `index.html` con doble clic p
 
 - `index.html`: estructura, contenido, SEO y secciones.
 - `assets/css/styles.css`: colores, tipografías, composición y diseño responsive.
-- `assets/js/config.js`: precio, WhatsApp, estilos, preguntas, redes y Reels.
+- `assets/js/config.js`: precio, WhatsApp, estilos, preguntas y redes.
 - `assets/js/app.js`: recomendador, selección, formulario, sesión y WhatsApp.
 - `assets/images/`: fotografías reales y versiones WebP optimizadas.
 - `assets/videos/`: los dos videos verticales locales.
@@ -91,18 +91,9 @@ Las preguntas y sus opciones están en `assets/js/config.js`, dentro de `quiz`. 
 
 Puedes cambiar textos o puntuaciones. Si agregas una pregunta, la barra de progreso se ajusta automáticamente. Las reglas especiales para respuestas mixtas están en `calculateRecommendation()` dentro de `assets/js/app.js`.
 
-## Agregar uno o dos Reels de Instagram
+## Cambiar el tutorial completo
 
-En `assets/js/config.js`, pega los enlaces completos:
-
-```js
-instagramReels: [
-  "https://www.instagram.com/reel/CODIGO_1/",
-  "https://www.instagram.com/reel/CODIGO_2/"
-]
-```
-
-Si dejas un espacio vacío, el sitio muestra una tarjeta elegante indicando dónde irá el Reel. Instagram debe permitir que la publicación sea pública para que el embed funcione.
+El tutorial de YouTube aparece después de los dos videos verticales. Para cambiarlo, reemplaza el identificador `uWrDeOx_scs` dentro del enlace `youtube-nocookie.com/embed/` en `index.html`.
 
 ## Editar redes sociales
 

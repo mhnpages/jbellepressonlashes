@@ -8,8 +8,7 @@
   const state = {
     selectedStyle: "",
     quizStep: 0,
-    answers: [],
-    lastFocusedElement: null
+    answers: []
   };
 
   function getStyle(styleId) {
@@ -26,13 +25,9 @@
 
   function saveTemporarySelection() {
     const previous = readDraft();
-    const form = document.getElementById("order-form");
     const draft = {
       ...previous,
-      style: state.selectedStyle || previous.style || "",
-      name: form ? form.elements.name.value.trim() : previous.name || "",
-      city: form ? form.elements.city.value.trim() : previous.city || "",
-      payment: form ? form.elements.payment.value : previous.payment || ""
+      style: state.selectedStyle || previous.style || ""
     };
     sessionStorage.setItem(storageKey, JSON.stringify(draft));
     sessionStorage.setItem(quizKey, JSON.stringify(state.answers));
@@ -51,12 +46,6 @@
       selectStyle(draft.style, false);
     }
 
-    const name = document.getElementById("order-name");
-    const city = document.getElementById("order-city");
-    const payment = document.getElementById("order-payment");
-    if (name) name.value = draft.name || "";
-    if (city) city.value = draft.city || "";
-    if (payment) payment.value = draft.payment || "";
   }
 
   function selectStyle(styleId, shouldSave = true) {
@@ -78,8 +67,6 @@
       button.dataset.activeStyle = styleId;
     });
 
-    const orderStyle = document.getElementById("order-style");
-    if (orderStyle) orderStyle.value = styleId;
     if (shouldSave) saveTemporarySelection();
   }
 
@@ -175,7 +162,7 @@
           <span><small>Precio</small><strong>${config.currency} ${config.price}</strong></span>
         </div>
         <div class="recommendation-actions">
-          <button class="button button-primary order-trigger" data-style="${styleId}">Pedir este estilo</button>
+          <button class="button button-primary order-trigger" data-style="${styleId}">Quiero mi kit</button>
           <button class="button button-secondary" id="compare-styles">Comparar otros estilos</button>
           <button class="quiz-back" type="button" id="restart-quiz">Repetir el test</button>
         </div>
@@ -184,7 +171,7 @@
 
     attachImageFallbacks(result);
     result.querySelector(".order-trigger").addEventListener("click", (event) => {
-      openOrderModal(event.currentTarget.dataset.style);
+      openWhatsApp(event.currentTarget.dataset.style);
     });
     result.querySelector("#compare-styles").addEventListener("click", () => {
       document.getElementById("estilos").scrollIntoView({ behavior: "smooth" });
@@ -199,79 +186,24 @@
     });
   }
 
-  function openOrderModal(styleId) {
-    const requestedStyle = styleId || state.selectedStyle || readDraft().style || "unsure";
+  function buildWhatsAppMessage(styleId = "") {
+    const style = getStyle(styleId);
+    const interest = style
+      ? `Me interesa el estilo ${style.name} ${style.length}. Por favor, ¿pueden confirmarme la disponibilidad, las formas de pago y las opciones de entrega?`
+      : "Estoy interesada. Por favor, ¿pueden enviarme los estilos disponibles, las formas de pago y las opciones de entrega?";
+
+    return `Hola, quiero hacer un pedido de pestañas Press-On J. Belle Cosmetics.
+
+${interest}
+
+¡Gracias!`;
+  }
+
+  function openWhatsApp(styleId = "") {
+    const requestedStyle = styleId || state.selectedStyle || readDraft().style || "";
     if (getStyle(requestedStyle)) selectStyle(requestedStyle);
-
-    const modal = document.getElementById("order-modal");
-    const select = document.getElementById("order-style");
-    state.lastFocusedElement = document.activeElement;
-    select.value = getStyle(requestedStyle) ? requestedStyle : "unsure";
-    modal.hidden = false;
-    modal.setAttribute("aria-hidden", "false");
-    document.body.classList.add("modal-open");
-    window.setTimeout(() => document.getElementById("order-name").focus(), 40);
-  }
-
-  function closeOrderModal() {
-    const modal = document.getElementById("order-modal");
-    if (modal.hidden) return;
-    saveTemporarySelection();
-    modal.hidden = true;
-    modal.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("modal-open");
-    if (state.lastFocusedElement) state.lastFocusedElement.focus();
-  }
-
-  function validateOrderForm() {
-    const name = document.getElementById("order-name");
-    const city = document.getElementById("order-city");
-    const payment = document.getElementById("order-payment");
-    const errors = {
-      name: name.value.trim().length < 2 ? "Escribe tu nombre." : "",
-      city: city.value.trim().length < 2 ? "Escribe tu ciudad." : "",
-      payment: payment.value ? "" : "Selecciona un método de pago."
-    };
-
-    [name, city, payment].forEach((field) => {
-      const message = errors[field.name];
-      field.setAttribute("aria-invalid", String(Boolean(message)));
-      document.getElementById(`${field.name}-error`).textContent = message;
-    });
-
-    const firstInvalid = [name, city, payment].find((field) => field.getAttribute("aria-invalid") === "true");
-    if (firstInvalid) firstInvalid.focus();
-    return !firstInvalid;
-  }
-
-  function buildWhatsAppMessage(orderData) {
-    const style = getStyle(orderData.style);
-    const styleName = style ? `${style.name} ${style.length}` : "Aún no estoy segura";
-    const length = style ? style.length : "Por confirmar";
-    const helpText = orderData.help
-      ? "\nTambién quisiera que me ayuden a confirmar si este estilo es el más adecuado para mí.\n"
-      : "";
-
-    return `Hola, mi nombre es ${orderData.name}.
-
-Quisiera hacer un pedido de pestañas Press-On J. Belle Cosmetics.
-
-Estilo seleccionado: ${styleName}
-Largo: ${length}
-Ciudad: ${orderData.city}
-Método de pago: ${orderData.payment}
-
-Precio del kit: ${config.currency} ${config.price}
-${config.shippingText}, ${config.shippingException.toLowerCase()}.
-${helpText}
-Quedo pendiente para confirmar disponibilidad y entrega.`;
-  }
-
-  function openWhatsApp(orderData) {
-    const message = buildWhatsAppMessage(orderData);
+    const message = buildWhatsAppMessage(requestedStyle);
     const url = `https://wa.me/${config.whatsappNumber}?text=${encodeURIComponent(message)}`;
-    document.getElementById("form-status").textContent = "Abriendo WhatsApp con tu pedido…";
-    saveTemporarySelection();
     window.open(url, "_blank", "noopener,noreferrer");
   }
 
@@ -342,26 +274,6 @@ Quedo pendiente para confirmar disponibilidad y entrega.`;
     });
   }
 
-  function setupModalKeyboard() {
-    document.addEventListener("keydown", (event) => {
-      const modal = document.getElementById("order-modal");
-      if (modal.hidden) return;
-      if (event.key === "Escape") closeOrderModal();
-      if (event.key !== "Tab") return;
-
-      const focusable = [...modal.querySelectorAll('button:not([disabled]), input:not([disabled]), select:not([disabled]), [href]')];
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    });
-  }
-
   function bindEvents() {
     document.querySelectorAll(".select-style").forEach((button) => {
       button.addEventListener("click", (event) => {
@@ -387,31 +299,7 @@ Quedo pendiente para confirmar disponibilidad y entrega.`;
       button.addEventListener("click", (event) => {
         event.preventDefault();
         const styleId = button.dataset.style || button.dataset.activeStyle || state.selectedStyle;
-        openOrderModal(styleId);
-      });
-    });
-
-    document.querySelectorAll("[data-close-modal]").forEach((element) => {
-      element.addEventListener("click", closeOrderModal);
-    });
-
-    document.getElementById("order-form").addEventListener("input", saveTemporarySelection);
-    document.getElementById("order-style").addEventListener("change", (event) => {
-      if (getStyle(event.target.value)) selectStyle(event.target.value);
-    });
-    document.getElementById("order-form").addEventListener("submit", (event) => {
-      event.preventDefault();
-      if (!validateOrderForm()) {
-        document.getElementById("form-status").textContent = "Revisa los campos marcados para continuar.";
-        return;
-      }
-      const form = event.currentTarget;
-      openWhatsApp({
-        name: form.elements.name.value.trim(),
-        city: form.elements.city.value.trim(),
-        style: form.elements.style.value,
-        payment: form.elements.payment.value,
-        help: form.elements.help.checked
+        openWhatsApp(styleId);
       });
     });
   }
@@ -425,15 +313,12 @@ Quedo pendiente para confirmar disponibilidad y entrega.`;
     attachImageFallbacks();
     setupRevealAnimations();
     setupAccordions();
-    setupModalKeyboard();
     bindEvents();
   }
 
   window.selectStyle = selectStyle;
   window.calculateRecommendation = calculateRecommendation;
   window.showRecommendation = showRecommendation;
-  window.openOrderModal = openOrderModal;
-  window.validateOrderForm = validateOrderForm;
   window.buildWhatsAppMessage = buildWhatsAppMessage;
   window.openWhatsApp = openWhatsApp;
   window.saveTemporarySelection = saveTemporarySelection;

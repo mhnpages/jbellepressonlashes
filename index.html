@@ -96,7 +96,7 @@
         <a href="#videos">Videos</a>
       </nav>
       <button class="button button-small button-ghost order-trigger" data-style="">
-        Pedir ahora
+        Quiero mi kit
       </button>
     </header>
 
@@ -118,7 +118,7 @@
           <div class="hero-actions">
             <a class="button button-primary" href="#asesor">Descubre tu estilo ideal</a>
             <button class="button button-secondary order-trigger" data-style="">
-              Hacer mi pedido
+              Quiero mi kit
             </button>
           </div>
 
@@ -177,6 +177,9 @@
             </li>
           </ol>
         </div>
+        <div class="section-order reveal">
+          <button class="button button-primary order-trigger" data-style="">Quiero mi kit</button>
+        </div>
       </section>
 
       <section class="section advisor" id="asesor" aria-labelledby="advisor-title">
@@ -202,6 +205,9 @@
           </div>
 
           <div class="recommendation-card" id="recommendation" hidden aria-live="polite"></div>
+        </div>
+        <div class="section-order reveal">
+          <button class="button button-primary order-trigger" data-style="">Quiero mi kit</button>
         </div>
       </section>
 
@@ -278,6 +284,9 @@
             <article><span>03</span><strong>Volumen</strong><small>Alto</small><b>14 mm</b><p>Eventos</p></article>
           </div>
         </div>
+        <div class="section-order reveal">
+          <button class="button button-primary order-trigger" data-style="">Quiero mi kit</button>
+        </div>
       </section>
 
       <section class="section kit-section" aria-labelledby="kit-title">
@@ -310,7 +319,7 @@
           <p class="eyebrow">El cambio se siente ligero</p>
           <h2 id="real-title">Tú misma, con una mirada que <em>habla más.</em></h2>
           <p>El resultado puede adaptarse usando más o menos clusters según la forma de tu ojo.</p>
-          <button class="text-link order-trigger" data-style="intermedio">Quiero un look así <span aria-hidden="true">↗</span></button>
+          <button class="text-link order-trigger" data-style="intermedio">Quiero mi kit <span aria-hidden="true">↗</span></button>
         </div>
         <figure class="before-after reveal">
           <picture>
@@ -349,7 +358,7 @@
             <p class="eyebrow">Tutorial completo</p>
             <h3 id="tutorial-title">Aprende a colocarlas paso a paso.</h3>
             <p>Prepara tus pestañas, coloca cada clúster y consigue un acabado cómodo y natural desde casa.</p>
-            <button class="button button-primary order-trigger" data-style="">Pedir mi kit</button>
+            <button class="button button-primary order-trigger" data-style="">Quiero mi kit</button>
           </div>
           <a
             class="tutorial-video"
@@ -380,7 +389,7 @@
           <p class="eyebrow">Todo claro antes de elegir</p>
           <h2 id="faq-title">Preguntas <em>frecuentes</em></h2>
           <p>¿Tienes otra pregunta? Escríbenos y te asesoramos personalmente.</p>
-          <button class="button button-secondary order-trigger" data-style="">Hablar por WhatsApp</button>
+          <button class="button button-secondary order-trigger" data-style="">Quiero mi kit</button>
         </div>
         <div class="accordion reveal">
           <details><summary>¿Necesito pegamento?</summary><p>No. Las pestañas son autoadhesivas y están listas para colocar.</p></details>
@@ -399,7 +408,7 @@
           <p class="eyebrow">Tu próxima mirada empieza aquí</p>
           <h2 id="closing-title">Lista en un minuto.<br /><em>Segura todo el día.</em></h2>
           <p>Elige tu estilo y prepara tu pedido personalizado por WhatsApp.</p>
-          <button class="button button-light order-trigger" data-style="">Pedir mis Press-On Lashes</button>
+          <button class="button button-light order-trigger" data-style="">Quiero mi kit</button>
         </div>
         <div class="social-links" id="social-links" aria-label="Redes sociales de J. Belle Cosmetics"></div>
       </section>
@@ -422,60 +431,8 @@
     </footer>
 
     <button class="mobile-order order-trigger" data-style="" aria-label="Pedir pestañas Press-On por WhatsApp">
-      <span aria-hidden="true">WA</span> Pedir por WhatsApp
+      <span aria-hidden="true">WA</span> Quiero mi kit
     </button>
-
-    <div class="modal" id="order-modal" hidden aria-hidden="true">
-      <div class="modal-backdrop" data-close-modal></div>
-      <section class="order-sheet" role="dialog" aria-modal="true" aria-labelledby="order-title">
-        <button class="modal-close" type="button" data-close-modal aria-label="Cerrar formulario">×</button>
-        <div class="modal-heading">
-          <p class="eyebrow">Casi listas</p>
-          <h2 id="order-title">Preparemos tu pedido.</h2>
-          <p>Solo necesitamos estos datos para crear tu mensaje de WhatsApp.</p>
-        </div>
-
-        <form id="order-form" novalidate>
-          <div class="form-grid">
-            <label> ¿Cómo te llamas?
-              <input type="text" id="order-name" name="name" autocomplete="name" required placeholder="Tu nombre" />
-              <small class="field-error" id="name-error"></small>
-            </label>
-            <label> ¿En qué ciudad estás?
-              <input type="text" id="order-city" name="city" autocomplete="address-level2" required placeholder="Tu ciudad" />
-              <small class="field-error" id="city-error"></small>
-            </label>
-            <label> Estilo seleccionado
-              <select id="order-style" name="style" required>
-                <option value="natural">Natural 11 mm</option>
-                <option value="intermedio">Intermedio 12 mm</option>
-                <option value="volumen">Volumen 14 mm</option>
-                <option value="unsure">Aún no estoy segura</option>
-              </select>
-            </label>
-            <label> Método de pago
-              <select id="order-payment" name="payment" required>
-                <option value="">Selecciona una opción</option>
-                <option>Link de pago anticipado</option>
-                <option>Transferencia anticipada</option>
-                <option>Pago al recibir en efectivo</option>
-              </select>
-              <small class="field-help">Por seguridad, el pago al recibir se acepta únicamente en efectivo.</small>
-              <small class="field-error" id="payment-error"></small>
-            </label>
-          </div>
-
-          <label class="checkbox-row">
-            <input type="checkbox" id="order-help" name="help" />
-            <span>Deseo recibir ayuda para confirmar qué estilo me conviene.</span>
-          </label>
-
-          <p class="privacy-note">Tus datos se usan únicamente para preparar el mensaje de WhatsApp y no se almacenan en este sitio.</p>
-          <button class="button button-primary button-wide" type="submit">Continuar a WhatsApp <span aria-hidden="true">↗</span></button>
-          <p class="form-status" id="form-status" aria-live="polite"></p>
-        </form>
-      </section>
-    </div>
 
     <script src="assets/js/config.js"></script>
     <script src="assets/js/app.js"></script>

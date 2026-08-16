@@ -31,23 +31,21 @@ test("recomienda Volumen con impacto, eventos y pestañas abundantes", () => {
   assert.equal(sandbox.window.calculateRecommendation([2, 2, 2]), "volumen");
 });
 
-test("crea un mensaje de WhatsApp con todos los datos del pedido", () => {
-  const message = sandbox.window.buildWhatsAppMessage({
-    name: "María Prueba",
-    city: "Tegucigalpa",
-    style: "volumen",
-    payment: "Pago al recibir en efectivo",
-    help: true
-  });
+test("crea un mensaje directo de WhatsApp con el estilo elegido", () => {
+  const message = sandbox.window.buildWhatsAppMessage("volumen");
 
-  assert.match(message, /María Prueba/);
+  assert.match(message, /quiero hacer un pedido/);
   assert.match(message, /Volumen 14 mm/);
-  assert.match(message, /Tegucigalpa/);
-  assert.match(message, /Pago al recibir en efectivo/);
-  assert.match(message, /Precio del kit: L 790/);
-  assert.match(message, /ayuden a confirmar/);
+  assert.match(message, /formas de pago/);
+  assert.match(message, /opciones de entrega/);
 
   const url = `https://wa.me/${sandbox.window.JBELLE_CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
   assert.ok(url.startsWith("https://wa.me/50495248254?text="));
-  assert.ok(url.includes("Mar%C3%ADa%20Prueba"));
+  assert.ok(url.includes("Volumen%2014%20mm"));
+});
+
+test("solicita estilos cuando aún no se ha elegido uno", () => {
+  const message = sandbox.window.buildWhatsAppMessage();
+  assert.match(message, /estilos disponibles/);
+  assert.match(message, /formas de pago/);
 });

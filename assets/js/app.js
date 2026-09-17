@@ -162,7 +162,7 @@
           <span><small>Precio</small><strong>${config.currency} ${config.price}</strong></span>
         </div>
         <div class="recommendation-actions">
-          <button class="button button-primary order-trigger" data-style="${styleId}">Quiero mi kit</button>
+          <button class="button button-primary order-trigger" data-style="${styleId}">Quiero mi kit promo L.790</button>
           <button class="button button-secondary" id="compare-styles">Comparar otros estilos</button>
           <button class="quiz-back" type="button" id="restart-quiz">Repetir el test</button>
         </div>

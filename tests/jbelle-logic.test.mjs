@@ -19,22 +19,31 @@ vm.createContext(sandbox);
 vm.runInContext(fs.readFileSync("assets/js/config.js", "utf8"), sandbox);
 vm.runInContext(fs.readFileSync("assets/js/app.js", "utf8"), sandbox);
 
-test("recomienda Natural con respuestas naturales y de uso diario", () => {
+test("recomienda Súper Natural con respuestas naturales y de uso diario", () => {
   assert.equal(sandbox.window.calculateRecommendation([0, 0, 0]), "natural");
 });
 
+test("recomienda Natural con volumen para una mirada natural más definida", () => {
+  assert.equal(sandbox.window.calculateRecommendation([1, 1, 1]), "naturalvolumen");
+});
+
 test("recomienda Intermedio con respuestas elegantes y versátiles", () => {
-  assert.equal(sandbox.window.calculateRecommendation([1, 3, 1]), "intermedio");
+  assert.equal(sandbox.window.calculateRecommendation([2, 3, 1]), "intermedio");
 });
 
 test("recomienda Volumen con impacto, eventos y pestañas abundantes", () => {
-  assert.equal(sandbox.window.calculateRecommendation([2, 2, 2]), "volumen");
+  assert.equal(sandbox.window.calculateRecommendation([3, 2, 2]), "volumen");
+});
+
+test("recomienda Anime cuando se eligen puntas marcadas", () => {
+  assert.equal(sandbox.window.calculateRecommendation([4, 2, 2]), "anime");
 });
 
 test("crea un mensaje directo de WhatsApp con el estilo elegido", () => {
   const message = sandbox.window.buildWhatsAppMessage("volumen");
 
-  assert.match(message, /quiero hacer un pedido/);
+  assert.match(message, /quiero comprar la promo/);
+  assert.match(message, /L\.790 con envío gratis/);
   assert.match(message, /Volumen 14 mm/);
   assert.match(message, /formas de pago/);
   assert.match(message, /opciones de entrega/);

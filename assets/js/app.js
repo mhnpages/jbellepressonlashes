@@ -4,6 +4,7 @@
   const config = window.JBELLE_CONFIG;
   const storageKey = "jbelleOrderDraft";
   const quizKey = "jbelleQuizAnswers";
+  const promoDeadlineKey = "jbellePromoDeadline";
 
   const state = {
     selectedStyle: "",
@@ -71,24 +72,26 @@
   }
 
   function calculateRecommendation(answers) {
-    const scores = { natural: 0, intermedio: 0, volumen: 0 };
+    const scores = { natural: 0, naturalvolumen: 0, intermedio: 0, volumen: 0, anime: 0 };
 
     answers.forEach((answer, index) => {
       const question = config.quiz[index];
       const option = question && question.options[answer];
       if (!option) return;
       Object.entries(option.scores).forEach(([styleId, value]) => {
-        scores[styleId] += value;
+        if (Object.hasOwn(scores, styleId)) scores[styleId] += value;
       });
     });
 
     if (answers[0] === 0 && answers[1] === 0) return "natural";
-    if (answers[0] === 1 && answers[1] === 3) return "intermedio";
-    if (answers[0] === 2 && answers[1] === 2) return "volumen";
+    if (answers[0] === 1 && answers[1] <= 1) return "naturalvolumen";
+    if (answers[0] === 2 && answers[1] === 3) return "intermedio";
+    if (answers[0] === 3 && answers[1] === 2) return "volumen";
+    if (answers[0] === 4) return "anime";
 
     return Object.entries(scores).sort((a, b) => {
       if (b[1] !== a[1]) return b[1] - a[1];
-      const tiePriority = { intermedio: 3, natural: 2, volumen: 1 };
+      const tiePriority = { intermedio: 5, naturalvolumen: 4, natural: 3, anime: 2, volumen: 1 };
       return tiePriority[b[0]] - tiePriority[a[0]];
     })[0][0];
   }
@@ -192,7 +195,7 @@
       ? `Me interesa el estilo ${style.name} ${style.length}. Por favor, ¿pueden confirmarme la disponibilidad, las formas de pago y las opciones de entrega?`
       : "Estoy interesada. Por favor, ¿pueden enviarme los estilos disponibles, las formas de pago y las opciones de entrega?";
 
-    return `Hola, quiero hacer un pedido de pestañas Press-On J. Belle Cosmetics.
+    return `Hola, quiero comprar la promo de pestañas Press-On J. Belle Cosmetics por L.790 con envío gratis.
 
 ${interest}
 
@@ -274,6 +277,45 @@ ${interest}
     });
   }
 
+  function setupPromoCountdown() {
+    const countdown = document.querySelector("[data-promo-countdown]");
+    const durationSeconds = Number(config.promoShippingDurationSeconds);
+    if (!countdown || !Number.isFinite(durationSeconds) || durationSeconds <= 0) return;
+
+    const savedDeadline = localStorage.getItem(promoDeadlineKey);
+    let deadline = Number(savedDeadline);
+    if (!savedDeadline || !Number.isFinite(deadline)) {
+      deadline = Date.now() + durationSeconds * 1000;
+      localStorage.setItem(promoDeadlineKey, String(deadline));
+    }
+    const hours = countdown.querySelector("[data-countdown-hours]");
+    const minutes = countdown.querySelector("[data-countdown-minutes]");
+    const seconds = countdown.querySelector("[data-countdown-seconds]");
+
+    if (!Number.isFinite(deadline) || !hours || !minutes || !seconds) return;
+
+    const updateCountdown = () => {
+      const remaining = deadline - Date.now();
+
+      if (remaining <= 0) {
+        document.body.classList.add("promo-expired");
+        window.clearInterval(timer);
+        return;
+      }
+
+      const totalHours = Math.floor(remaining / 3600000);
+      const remainingMinutes = Math.floor((remaining % 3600000) / 60000);
+      const remainingSeconds = Math.floor((remaining % 60000) / 1000);
+
+      hours.textContent = String(totalHours).padStart(2, "0");
+      minutes.textContent = String(remainingMinutes).padStart(2, "0");
+      seconds.textContent = String(remainingSeconds).padStart(2, "0");
+    };
+
+    const timer = window.setInterval(updateCountdown, 1000);
+    updateCountdown();
+  }
+
   function bindEvents() {
     document.querySelectorAll(".select-style").forEach((button) => {
       button.addEventListener("click", (event) => {
@@ -313,6 +355,7 @@ ${interest}
     attachImageFallbacks();
     setupRevealAnimations();
     setupAccordions();
+    setupPromoCountdown();
     bindEvents();
   }
 

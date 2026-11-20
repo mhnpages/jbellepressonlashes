@@ -154,7 +154,9 @@
     result.hidden = false;
     result.innerHTML = `
       <div class="recommendation-image recommendation-image-${styleId}">
-        <img src="${style.image}" data-fallback="${style.fallbackImage}" alt="Estilo ${style.name} ${style.length}" width="1536" height="1024" />
+        <svg viewBox="${style.resultViewBox}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Estilo ${style.name} ${style.length}">
+          <image href="${style.image}" width="${style.resultImageWidth}" height="${style.resultImageHeight}" />
+        </svg>
       </div>
       <div class="recommendation-copy">
         <p class="eyebrow">Según tus respuestas</p>

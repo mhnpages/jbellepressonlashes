@@ -58,3 +58,20 @@ test("solicita estilos cuando aún no se ha elegido uno", () => {
   assert.match(message, /estilos disponibles/);
   assert.match(message, /formas de pago/);
 });
+
+test("los cinco resultados usan imágenes y recortes existentes", () => {
+  const styles = Object.values(sandbox.window.JBELLE_CONFIG.styles);
+  assert.equal(styles.length, 5);
+  for (const style of styles) {
+    assert.ok(fs.existsSync(style.image), style.image);
+    assert.equal(style.resultViewBox.split(" ").length, 4);
+    assert.ok(style.resultImageWidth > 0 && style.resultImageHeight > 0);
+  }
+});
+
+test("las tarjetas incluyen cinco clústeres y el Anime real sin avisos de prueba", () => {
+  const html = fs.readFileSync("index.html", "utf8");
+  assert.equal((html.match(/class="style-cluster"/g) || []).length, 5);
+  assert.match(html, /assets\/images\/cluster-anime-real\.webp/);
+  assert.doesNotMatch(html, /imagen por ajustar|sin publicar|output\/artes/);
+});
